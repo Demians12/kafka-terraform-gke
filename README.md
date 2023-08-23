@@ -40,10 +40,10 @@ cd terraform/gke-standard
 chmod +x ./install.sh
 ./install.sh
 ``` 
-You will be prompted to enter:
-- The service account email
-- Operating system (linux/mac/windows).
-- Access Grafana Dashboard: Once the script has run successfully, you can access the Grafana dashboard at http://127.0.0.1:3000.
+**You will be prompted to enter:**
+- Your google cloud service account email
+- Operating system you are using (linux/mac/windows).
+- **Access Grafana Dashboard:** Once the script has run successfully, you can access the Grafana dashboard at http://127.0.0.1:3000.
 
 ## Functions
 Here's a brief description of the main functions in the script:
