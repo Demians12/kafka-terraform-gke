@@ -47,10 +47,9 @@ chmod +x ./install.sh
 
 ## Functions
 Here's a brief description of the main functions in the script:
-- check_success(): Checks if a command was successful.
-- wait_for_job(): Waits for a Kubernetes job to complete.
-
-
+- **check_success():** Checks if a command was successful.
+- **delete_job_if_exists():** It delete a job producer if it already exists. It avoids manual job deletion to run the script again
+- **wait_for_job():** Waits for a Kubernetes job to complete.
 
 ## Clean up
 
