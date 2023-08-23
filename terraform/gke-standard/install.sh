@@ -3,10 +3,17 @@
 set -e
 
 
-check_success() {
-  if [[ $? -ne 0 ]]; then
-    echo "Error: $1"
-    exit 1
+check_job_exists() {
+  local job_name="$1"
+  kubectl get job $job_name -n $APPLICATION_NAMESPACE --ignore-not-found=true
+}
+
+
+delete_job_if_exists() {
+  local job_name="$1"
+  if [[ -n "$(check_job_exists $job_name)" ]]; then
+    echo "Job $job_name already exists, deleting..."
+    kubectl delete job $job_name -n $APPLICATION_NAMESPACE
   fi
 }
 
@@ -212,28 +219,39 @@ MONITORING_NAMESPACE="monitoring"
   fi
 
 
-
+  #==== Create a Topic ====#
   echo "Creating a topic"
   kubectl apply -n $APPLICATION_NAMESPACE -f ../../manifests/01-kafka/topic.yaml
   check_success "Failed to create the topic"
+  
+  #=== Test if the producer job had been already executed ===#
+  JOB_NAME="kafka-producer-perf-test"
+  delete_job_if_exists $JOB_NAME
+  
+  #=== Create the perf-test and wait it get completed ===#
   echo "Creating a job that produces perf-test"
   kubectl apply -n $APPLICATION_NAMESPACE -f ../../manifests/01-kafka/producer-perf.yaml
   check_success "Failed to create the producer perf-test job"
   wait_for_job "kafka-producer-perf-test"
+
+  #=== Create a consumer ===#
   echo "Creating a consumer"
   kubectl apply -n $APPLICATION_NAMESPACE -f ../../manifests/01-kafka/consumer.yaml
   check_success "Failed to create the consumer"
   echo "Testing Kafka cluster has completed successfully!"
 
-
+  #=== Create the monitoring ===#
+  
   echo "Creating monitoring with prometheus/grafana..."
   helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
   helm upgrade --install prometheus prometheus-community/kube-prometheus-stack --namespace $MONITORING_NAMESPACE
   sleep 30
   kubectl apply -f ../../manifests/02-prometheus-metrics/kafka-prometheus.yaml -n $MONITORING_NAMESPACE
-  sleep 6
+  
+  # The password is automatically generated, it is not admin! it is printed in the screen for test purpose!
   echo "Getting grafana password"
   kubectl get secret prometheus-grafana -n $MONITORING_NAMESPACE -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
+  # It prints the password in the screen. Comment the command line for security reasons.
   kubectl port-forward svc/prometheus-grafana 3000:80 -n $MONITORING_NAMESPACE
 
   echo "you can access the grafana dashboard in the address: http://127.0.0.1:3000"
