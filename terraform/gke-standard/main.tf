@@ -7,6 +7,7 @@ module "network" {
   project_id     = var.project_id
   region         = var.region
   cluster_prefix = var.cluster_prefix
+   
 }
 
 # [START gke_streaming_kafka_strimzi_standard_private_regional_cluster]
@@ -16,7 +17,7 @@ module "kafka_cluster" {
   region                   = var.region
   cluster_prefix           = var.cluster_prefix
   network                  = module.network.network_name
-  subnetwork               = module.network.subnet_name
+  subnetwork               = module.network.subnet_names
 
   node_pools = [
     {
