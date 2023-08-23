@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka-console-consumer
+  namespace: kafka
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka-console-consumer
+  template:
+    metadata:
+      labels:
+        app: kafka-console-consumer
+    spec:
+      containers:
+      - name: kafka-console-consumer
+        image: quay.io/strimzi/kafka:0.36.1-kafka-3.5.1
+        command:
+        - "/bin/bash"
+        - "-c"
+        - "/opt/kafka/bin/kafka-console-consumer.sh --bootstrap-server kafka-cluster-kafka-bootstrap:9092 --topic topic-one --from-beginning"
