@@ -160,20 +160,20 @@ MONITORING_NAMESPACE="monitoring"
   fi
 
 
+  
+  NAMESPACES=($NAMESPACE $APPLICATION_NAMESPACE $MONITORING_NAMESPACE)
+    for NS in "${NAMESPACES[@]}"; do
+      NAMESPACE_EXISTS=$(kubectl get namespace $NS --ignore-not-found=true)
+      if [ -z "$NAMESPACE_EXISTS" ]; then
+        echo "Creating namespace $NS"
+        kubectl create namespace $NS
+      else
+        echo "Namespace $NS already exists, continuing..."
+      fi
+    done
 
-  NAMESPACE_EXISTS=$(kubectl get namespace $NAMESPACE --ignore-not-found=true)
-  if [ -z "$NAMESPACE_EXISTS" ]; then
-    echo "Creating a namespaces"
-    kubectl create namespace $NAMESPACE
-    kubectl create namespace $APPLICATION_NAMESPACE
-    kubectl create namespace $MONITORING_NAMESPACE
-  else
-    echo "Namespace $NAMESPACE already exists, continuing..."
-    echo "Namespace $APPLICATION_NAMESPACE already exists, continuing..."
-    echo "Namespace $MONITORING_NAMESPACE already exists, continuing..."
-  fi
   helm repo add strimzi https://strimzi.io/charts/
-  helm upgrade --install strimzi-operator strimzi/strimzi-kafka-operator --namespace $NAMESPACE -f values.yaml
+  helm upgrade --install strimzi-operator strimzi/strimzi-kafka-operator --namespace $NAMESPACE -f values.yaml --force
   sleep 10
   DEPLOYMENT_STATUS=$(helm ls -n $NAMESPACE | grep "strimzi-operator" | awk '{print $8}')
   if [ "$DEPLOYMENT_STATUS" == "deployed" ]; then
