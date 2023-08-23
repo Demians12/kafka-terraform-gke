@@ -1,4 +1,4 @@
-# google_client_config and kubernetes provider must be explicitly specified like the following.
+
 data "google_client_config" "default" {}
 
 # create private subnet
@@ -10,7 +10,7 @@ module "network" {
    
 }
 
-# [START gke_streaming_kafka_strimzi_standard_private_regional_cluster]
+
 module "kafka_cluster" {
   source                   = "../modules/cluster"
   project_id               = var.project_id
@@ -70,5 +70,5 @@ output "kubectl_connection_command" {
   value       = "gcloud container clusters get-credentials ${var.cluster_prefix}-cluster --region ${var.region}"
   description = "Connection command"
 }
-# [END gke_streaming_kafka_strimzi_standard_private_regional_cluster]
+
 
