@@ -26,12 +26,12 @@ git clone git@github.com:Demians12/kafka-terraform-gke.git
 
 - Set Up Environment Variables: You will need to set up the following environment variables:
 
-SERVICE_ACCOUNT_EMAIL: The service account email for Google Cloud.
-REGION: The region for the GKE cluster (default is "us-central1").
-CLUSTER_PREFIX: Prefix for the cluster (default is "kafka").
-NAMESPACE: Namespace for Strimzi (default is "strimzi").
-APPLICATION_NAMESPACE: Namespace for Kafka (default is "kafka").
-MONITORING_NAMESPACE: Namespace for monitoring (default is "monitoring").
+SERVICE_ACCOUNT_EMAIL: The service account email for Google Cloud. <br>
+REGION: The region for the GKE cluster (default is "us-central1").<br>
+CLUSTER_PREFIX: Prefix for the cluster (default is "kafka").<br>
+NAMESPACE: Namespace for Strimzi (default is "strimzi").<br>
+APPLICATION_NAMESPACE: Namespace for Kafka (default is "kafka").<br>
+MONITORING_NAMESPACE: Namespace for monitoring (default is "monitoring").<br>
 
 ## Run the Script: 
 - In the folder terraform/gke-standard run the script:
