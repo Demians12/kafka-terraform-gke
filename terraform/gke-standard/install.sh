@@ -2,7 +2,7 @@
 
 set -e
 
-# Check if a command was successful
+
 check_success() {
   if [[ $? -ne 0 ]]; then
     echo "Error: $1"
@@ -10,7 +10,6 @@ check_success() {
   fi
 }
 
-# Function to wait for a job to complete
 wait_for_job() {
   local job_name="$1"
   echo "Waiting for job $job_name to complete..."
@@ -43,9 +42,10 @@ MONITORING_NAMESPACE="monitoring"
     echo "Invalid operating system. Please run the script again and enter 'linux', 'mac', or 'windows'."
     exit 1
   fi
+  
 
 
-# Install_tools install tools based on the user's operating system
+  # Install required tools
   TOOLS=("terraform" "jq" "gcloud" "kubectl" "helm")
   for TOOL in "${TOOLS[@]}"; do
     if ! command -v $TOOL &> /dev/null; then
@@ -117,7 +117,7 @@ MONITORING_NAMESPACE="monitoring"
     fi
   done
 
-# Authenticate with Google Cloud
+# Authenticate with Google Cloud and grant required roles
 
   echo "Authenticating with Google Cloud..."
   gcloud auth login || { echo "This specific command failed"; exit 1; }
@@ -135,7 +135,7 @@ MONITORING_NAMESPACE="monitoring"
     if [ "$ROLE" == "roles/container.serviceAgent" ]; then
       MEMBER="serviceAccount:$SERVICE_ACCOUNT_EMAIL"
     fi
-    # Check if the role is already granted
+
     ROLE_GRANTED=$(gcloud projects get-iam-policy $PROJECT_ID --flatten="bindings[].members" --format='table(bindings.role)' --filter="bindings.members:$MEMBER" | grep -q "$ROLE" && echo "yes" || echo "no")
     if [ "$ROLE_GRANTED" == "yes" ]; then
       echo "Role $ROLE is already granted to $MEMBER in project $PROJECT_ID. Skipping..."
