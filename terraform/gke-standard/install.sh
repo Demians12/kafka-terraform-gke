@@ -43,8 +43,6 @@ MONITORING_NAMESPACE="monitoring"
     exit 1
   fi
   
-
-
   # Install required tools
   TOOLS=("terraform" "jq" "gcloud" "kubectl" "helm")
   for TOOL in "${TOOLS[@]}"; do
@@ -172,6 +170,7 @@ MONITORING_NAMESPACE="monitoring"
   else
     echo "Namespace $NAMESPACE already exists, continuing..."
     echo "Namespace $APPLICATION_NAMESPACE already exists, continuing..."
+    echo "Namespace $MONITORING_NAMESPACE already exists, continuing..."
   fi
   helm repo add strimzi https://strimzi.io/charts/
   helm upgrade --install strimzi-operator strimzi/strimzi-kafka-operator --namespace $NAMESPACE -f values.yaml
