@@ -1,7 +1,7 @@
 # Kafka Cluster 
 This project aims to create a Kafka cluster using Strimzi, provisioned with Terraform, and deployed in Google Cloud, creating a GKE cluster. The Kafka cluster is tested by creating a topic, a performance test, and then a consumer. Finally, monitoring is set up with Prometheus and Grafana.
 
-It is an automated way to authenticate, configure, deploy and test a kafka cluster with terraform in GKE
+This project provides an automated way to provision, set up, and monitor a Kafka cluster using modern tools and platforms.
 
 ## Overview
 
@@ -50,7 +50,7 @@ Here's a brief description of the main functions in the script:
 - check_success(): Checks if a command was successful.
 - wait_for_job(): Waits for a Kubernetes job to complete.
 
-This project provides an automated way to provision, set up, and monitor a Kafka cluster using modern tools and platforms.
+
 
 ## Clean up
 
