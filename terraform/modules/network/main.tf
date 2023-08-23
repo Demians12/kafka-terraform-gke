@@ -46,7 +46,6 @@ module "gcp-network" {
         ip_cidr_range = "10.52.16.0/20"
       },
     ]
-    # Add more secondary ranges as needed
   }
 }
 
