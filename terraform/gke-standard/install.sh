@@ -250,7 +250,7 @@ MONITORING_NAMESPACE="monitoring"
   # The password is automatically generated, it is not admin! it is printed in the screen for test purpose!
   echo "Getting grafana password"
   kubectl get secret prometheus-grafana -n $MONITORING_NAMESPACE -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
-  # It prints the password in the screen. Comment the command line for security reasons.
+  # It prints the password in the screen. Comment the command for security reasons if you are not using for testing
   kubectl port-forward svc/prometheus-grafana 3000:80 -n $MONITORING_NAMESPACE
 
   echo "you can access the grafana dashboard in the address: http://127.0.0.1:3000"
