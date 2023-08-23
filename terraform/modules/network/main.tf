@@ -22,7 +22,6 @@ module "gcp-network" {
       subnet_private_access = true
       subnet_flow_logs      = "true"
     },
-    # Add more zones as needed
   ]
 
   secondary_ranges = {
