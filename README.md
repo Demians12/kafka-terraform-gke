@@ -4,7 +4,7 @@ This project aims to create a Kafka cluster using Strimzi, provisioned with Terr
 It is an automated way to authenticate, configure, deploy and test a kafka cluster with terraform in GKE
 
 ## Overview
-- 
+
 - Provisioning: The infrastructure is provisioned using Terraform, creating a GKE cluster in the Google Cloud Platform.
 - Kafka Cluster Creation: Strimzi is used to create a Kafka cluster within the provisioned infrastructure.
 - Testing: The Kafka cluster is tested by creating a topic, running a performance test, and then creating a consumer.
@@ -19,9 +19,12 @@ kubectl
 Helm
 
 ## How to Run
-Clone the Repository: Clone this repository to your local machine.
+- Clone the Repository: 
+```bash
+git clone git@github.com:Demians12/kafka-terraform-gke.git
+``` 
 
-Set Up Environment Variables: You will need to set up the following environment variables:
+- Set Up Environment Variables: You will need to set up the following environment variables:
 
 SERVICE_ACCOUNT_EMAIL: The service account email for Google Cloud.
 REGION: The region for the GKE cluster (default is "us-central1").
@@ -33,6 +36,8 @@ MONITORING_NAMESPACE: Namespace for monitoring (default is "monitoring").
 ## Run the Script: 
 - In the folder terraform/gke-standard run the script:
 ```bash
+cd terraform/gke-standard
+chmod +x ./install.sh
 ./install.sh
 ``` 
 You will be prompted to enter:
