@@ -218,13 +218,12 @@ MONITORING_NAMESPACE="monitoring"
     fi
   fi
 
-
   #==== Create a Topic ====#
   echo "Creating a topic"
   kubectl apply -n $APPLICATION_NAMESPACE -f ../../manifests/01-kafka/topic.yaml
   check_success "Failed to create the topic"
   
-  #=== Test if the producer job had been already executed ===#
+  #=== delete if the producer job exists ===#
   JOB_NAME="kafka-producer-perf-test"
   delete_job_if_exists $JOB_NAME
   
